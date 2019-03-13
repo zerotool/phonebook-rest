@@ -1,0 +1,15 @@
+{
+  "name": "zerotool/phonebook-rest",
+  "description": "Phonebook REST API",
+  "require": {
+    "php": ">=7.0",
+    "nesbot/carbon": "^2.10",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "authors": [
+    {
+      "name": "Stanislav Erokhin",
+      "email": "st.erokhin1@gmail.com"
+    }
+  ]
+}

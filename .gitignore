@@ -1,0 +1,10 @@
+/cache/
+/config/development/
+/src/vendor
+.idea
+/src/.phalcon/*
+!/src/.phalcon/.gitkeep
+/mysql/data/*
+!/mysql/data/.gitkeep
+/tests/_output/*
+!/tests/_output/.gitkeep

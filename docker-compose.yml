@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - 8085:80
+    volumes:
+      - ./src:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - code-network
+    depends_on:
+      - db
+
+  php:
+    build: ./php
+    volumes:
+      - ./src:/var/www
+    networks:
+      - code-network
+
+  redis:
+    image: redis:5
+    networks:
+      - code-network
+
+  composer:
+    image: composer:1.6
+    volumes:
+      - ./src:/var/www
+    working_dir: /var/www
+    command: composer install
+    user: 1000:1000
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 111111
+      MYSQL_DATABASE: phonebook
+    volumes:
+      - ${DB_PATH}:/var/lib/mysql
+    networks:
+      - code-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8086:8080
+    networks:
+      - code-network
+
+  codecept:
+    image: codeception/codeception
+    depends_on:
+      - web
+    volumes:
+      - ./tests:/project/tests
+      - ./codeception.yml:/project/codeception.yml
+    networks:
+      - code-network
+
+networks:
+  code-network:
+    driver: bridge
